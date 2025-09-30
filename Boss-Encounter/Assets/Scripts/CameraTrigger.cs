@@ -8,7 +8,10 @@ public class CameraTrigger : MonoBehaviour
     private Light[] spotlights;
     
     public UnityEvent OnPlayerEnter;
-
+    
+    public static bool isAnyCameraTriggered = false;
+    
+    public float lightDuration = 10.0f;
     private void Awake()
     {
         spotlights = GetComponentsInChildren<Light>();
@@ -17,21 +20,28 @@ public class CameraTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player")&& !isAnyCameraTriggered)
         {
-            SetSpotlights(true);
+            isAnyCameraTriggered = true;
+            StartCoroutine(LightActivationSequence());
             OnPlayerEnter.Invoke();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            SetSpotlights(false);
-        }
+        // if (other.CompareTag("Player"))
+        // {
+        //     SetSpotlights(false);
+        // }
     }
 
+    private IEnumerator LightActivationSequence()
+    {
+        SetSpotlights(true);
+        yield return new WaitForSeconds(lightDuration);
+        SetSpotlights(false);
+    }
     private void SetSpotlights(bool state)
     {
         if (spotlights != null)
@@ -52,6 +62,11 @@ public class CameraTrigger : MonoBehaviour
             Gizmos.matrix = transform.localToWorldMatrix;
             Gizmos.DrawWireCube(box.bounds.center, box.bounds.size);
         }
+    }
+
+    public static void ResetTriggerState()
+    {
+        isAnyCameraTriggered = false;
     }
     void Start()
     {
