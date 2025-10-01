@@ -20,16 +20,14 @@ public class UIManager : MonoBehaviour
     private Coroutine notificationCoroutine;
     private Coroutine monologueCoroutine;
 
-    [Header("Password UI")]
-    public GameObject passwordUI;
 
-    private PlayerMovement playerMovement;
+
 
 
 
     void Awake()
     {
-        playerMovement = FindObjectOfType<PlayerMovement>();
+       
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -49,9 +47,10 @@ public class UIManager : MonoBehaviour
     }
     private IEnumerator OpenSceneMonologue()
     {
-        UIManager.Instance.ShowMonologue("I must find a way to Principal's Office and falsify my grades, or else I'll be expelled!");
-        yield return new WaitForSeconds(UIManager.Instance.displaytime + 1.0f);
-        UIManager.Instance.ShowMonologue("It seems that nobody is here now. This my only chance.");
+        yield return new WaitForSeconds(1.0f);
+        yield return StartCoroutine(MonologueRoutine("Hacker : Our goal is to get that great diamond!"));
+        yield return new WaitForSeconds(0.5f);
+        yield return StartCoroutine(MonologueRoutine("Hacker: I have already had their security cameras down! "));
     }
     public void ShowNotification(string message)
     {
@@ -61,7 +60,17 @@ public class UIManager : MonoBehaviour
         }
         notificationCoroutine = StartCoroutine(NotificationRoutine(message));
     }
-
+    public void ShowBossEncounterMonologue()
+    {
+        StartCoroutine(BossEncounterMonologueSequence());
+    }
+    private IEnumerator BossEncounterMonologueSequence()
+    {
+        ShowNotification("Warning!! Unverified Visitors!");
+        yield return new WaitForSeconds(0.5f);
+        yield return StartCoroutine(MonologueRoutine("Hacker : Wait what? They have emergency power supply!"));
+        ShowNotification("Please use the laser defence system to eliminate intruders.");
+    }
     private IEnumerator NotificationRoutine(string message)
     {
         temporaryNotificationText.text = message;
@@ -83,14 +92,7 @@ public class UIManager : MonoBehaviour
         interactionPromptText.gameObject.SetActive(false);
     }
 
-    public void ShowMonologue(string message)
-    {
-        if (monologueCoroutine != null)
-        {
-            StopCoroutine(monologueCoroutine);
-        }
-        monologueCoroutine = StartCoroutine(MonologueRoutine(message));
-    }
+
 
     private IEnumerator MonologueRoutine(string message)
     {

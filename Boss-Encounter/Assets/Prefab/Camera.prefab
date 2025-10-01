@@ -45,10 +45,10 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.9716981, g: 0.1512549, b: 0.1512549, a: 1}
-  m_Intensity: 20
+  m_Intensity: 3020
   m_Range: 15
-  m_SpotAngle: 91.254745
-  m_InnerSpotAngle: 74.549225
+  m_SpotAngle: 116.77756
+  m_InnerSpotAngle: 103.47508
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -269,7 +269,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 82ebb711300f79c4b919ecd19a973286,
         type: 3}
       propertyPath: m_Name
-      value: Camera 1
+      value: Camera
       objectReference: {fileID: 0}
     - target: {fileID: 4558216947197515260, guid: 82ebb711300f79c4b919ecd19a973286,
         type: 3}

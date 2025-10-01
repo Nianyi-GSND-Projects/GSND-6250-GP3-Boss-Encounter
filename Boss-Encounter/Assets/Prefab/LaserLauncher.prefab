@@ -194,7 +194,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.10447693
+        value: 0.014923096
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 10
-  duration: 0
-  bossSlowDuration: 0
-  bossSlowFactor: 0
+  duration: 5
+  bossSlowDuration: 5
+  bossSlowFactor: 0.5
   bossDamage: 0

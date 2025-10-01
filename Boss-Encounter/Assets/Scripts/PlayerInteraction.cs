@@ -6,26 +6,36 @@ public class PlayerInteraction : MonoBehaviour
 {
     // Start is called before the first frame update
     public KeyCode interactKey = KeyCode.E;
+    private ButtonController currentButton;
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (Input.GetKeyDown(interactKey))
+        ButtonController button = other.GetComponent<ButtonController>();
+        if (button != null)
         {
-            ButtonController button =  other.GetComponent<ButtonController>();
-            if (button)
-            {
-                button.OnPress();
-            }
+            currentButton = button;
+            UIManager.Instance.ShowInteractionPrompt($"Press [{interactKey}] to activate lasers");
         }
     }
     void Start()
     {
         
     }
-
+    private void OnTriggerExit(Collider other)
+    {
+        ButtonController button = other.GetComponent<ButtonController>();
+        if (button != null && button == currentButton)
+        {
+            currentButton = null;
+            UIManager.Instance.HideInteractionPrompt();
+        }
+    }
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(interactKey) && currentButton != null)
+        {
+            currentButton.OnPress();
+        }
     }
 }
